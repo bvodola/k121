@@ -1,0 +1,73 @@
+<html ng-app="k121App">
+  <head>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <title>Amigo Secreto k121</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+
+    <div class="container" ng-controller="UsersController as users">
+
+      <div ng-show="users.showAlert" class="alert alert-success" style="margin-top: 10px">
+        <button type="button" class="close" ng-click="users.setAlert(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Sorteio Realizado!</strong> Os nomes dos sorteados foram enviados por email.
+      </div>
+
+      <h2>
+        Amigo Secreto
+        <button ng-disabled="users.userList.length < 3" ng-click="users.draw()" class="btn btn-info">Realizar Sorteio</button>
+      </h2>
+      <div class="row">
+        <div class="col-md-6">
+          <form class="jumbotron" ng-submit="users.createUser()">
+            <div class="form-group">
+              <input required class="form-control" type="text" placeholder="Nome" ng-model="users.newUser.name">
+            </div>
+            <div class="form-group">
+              <input required class="form-control" type="email" placeholder="Email" ng-model="users.newUser.email">
+            </div>
+            <input type="submit" class="btn btn-success" value="Cadastrar Usuário">
+          </form>
+        </div>
+
+        <div class="col-md-6">
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="user in users.userList">
+              <div class="row">
+                <div class="col-xs-8">
+                  <span ng-show="!user._show">
+                    {{user.name}} - {{user.email}}
+                  </span>
+                  <span ng-show="user._show">
+                    <div class="form-group">
+                      <input class="form-control" type="text" ng-model="user.name" />
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="text" ng-model="user.email" />
+                    </div>
+                  </span>
+                </div>
+                <div class="col-xs-4 text-right">
+                  <span ng-show="!user._show">
+                    <button class="btn btn-primary" ng-click="users.toggleEdit(user)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                    <button class="btn btn-danger" ng-click="users.deleteUser(user)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                  </span>
+                  <span ng-show="user._show">
+                    <button class="btn btn-primary" ng-click="users.editUser(user)" type="input"><span class="glyphicon glyphicon-ok" aria-hidden="true" /></button>
+                  </span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>
